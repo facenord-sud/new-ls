@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'eax/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "eax"
+  spec.name          = "new-ls"
   spec.version       = Eax::VERSION
   spec.authors       = ["facenord"]
   spec.email         = ["facenord.sud@gmail.com"]
