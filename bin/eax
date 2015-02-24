@@ -1,0 +1,44 @@
+require 'eax'
+require 'slop'
+
+include Eax
+
+begin
+options = Slop.parse do |o|
+  o.banner = 'usage: eax [options] OPTIONAL directory'
+  o.on '-1', '--oneline', 'One entry per line'
+  o.on '-a', '--all', 'Show dot files'
+  o.on '-B', '--bytes',          'list file sizes in bytes, without prefixes'
+  o.on '-d', '--list-dirs',      'list directories as regular files'
+  o.on '-g', '--group',          'show group as well as user'
+  o.on '-h', '--header',         'show a header row at the top'
+  o.on '-H', '--links',          'show number of hard links'
+  o.on '-i', '--inode',          'show each file\'s inode number'
+  o.on '-l',  '--long',           'display extended details and attributes'
+  o.on '-r',  '--reverse',        'reverse order of files'
+  o.on '-R',  '--recurse',        'recurse into directories'
+  o.string '-s',  '--sort WORD',      'field to sort by'
+  o.on '-S',  '--blocks',         'show number of file system blocks'
+  o.on '-T',  '--tree',           'recurse into subdirectories in a tree view'
+  o.on '-m',  '--modified',       'display timestamp of most recent modification'
+  o.on '-u',  '--accessed',       'display timestamp of last access for a file'
+  o.on '-U',  '--created',        'display timestamp of creation for a file'
+  o.on '--version', 'print the version' do
+    puts Eax::VERSION
+    exit
+  end
+  o.on '-?', '--help', 'Print Help'
+end
+rescue Slop::Error => e
+  puts "Bad utilization: #{e} See eax --help for more infos"
+  exit
+end
+
+# if options.binary? or options.bytes? or options.group? or options.header? or options.inode?
+
+if options.help?
+  puts options
+  exit
+end
+
+puts EaxDir.new(options)
